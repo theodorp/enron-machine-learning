@@ -35,7 +35,7 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
     plt.xlabel(f1_name)
     plt.ylabel(f2_name)
     plt.savefig(name)
-    plt.show()
+    # plt.show()
 
 
 
@@ -51,6 +51,7 @@ feature_1 = "salary"
 feature_2 = "exercised_stock_options"
 poi  = "poi"
 features_list = [poi, feature_1, feature_2]
+# features_list = [poi, feature_1, feature_2, "total_payments"]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
@@ -61,7 +62,7 @@ poi, finance_features = targetFeatureSplit( data )
 ### (as it's currently written, line below assumes 2 features)
 for f1, f2 in finance_features:
     plt.scatter( f1, f2 )
-plt.show()
+# plt.show()
 
 
 
@@ -73,16 +74,24 @@ clf = KMeans(n_clusters=2)
 pred = clf.fit_predict( finance_features )
 Draw(pred, finance_features, poi, name="clusters_before_scaling.pdf", f1_name=feature_1, f2_name=feature_2)
 
+# print "Max/min exercised stock:", max([data[i][2] for i in range(len(data))]), min([data[i][2] for i in range(len(data)) if data[i][2] > 0])
+# print "Max/min salary:", max([data[i][1] for i in range(len(data))]), min([data[i][1] for i in range(len(data)) if data[i][1] > 0])
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
+from sklearn.preprocessing import MinMaxScaler
 
-try:
-    Draw(pred, finance_features, poi, mark_poi=False, name="clusters.pdf", f1_name=feature_1, f2_name=feature_2)
-except NameError:
-    print "no predictions object named pred found, no clusters to plot"
+min_max_scaler = MinMaxScaler()
+scaled_finance_features = min_max_scaler.fit_transform(finance_features)
+
+# print min_max_scaler.transform([200000.0, 1000000.0])
+
+# clf1 = KMeans(n_clusters=2)
+# pred1 = clf1.fit_predict( scaled_finance_features )
+# Draw(pred1, scaled_finance_features, poi, name="clusters_after_scaling.pdf")
 
 
-
-
-
+# try:
+    # Draw(pred, finance_features, poi, mark_poi=False, name="clusters.pdf", f1_name=feature_1, f2_name=feature_2)
+# except NameError:
+    # print "no predictions object named pred found, no clusters to plot"
