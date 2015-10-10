@@ -69,7 +69,9 @@ pred = clf.predict(features_test)
 print "Accuracy score: ", accuracy_score(labels_test, pred) 
 
 
-try:
-    prettyPicture(clf, features_test, labels_test)
-except NameError:
-    pass
+print features_train
+
+# try:
+prettyPicture(clf, features_test, labels_test, show=True)
+# except NameError:
+    # pass

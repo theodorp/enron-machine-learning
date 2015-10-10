@@ -25,7 +25,9 @@ dictionary = pickle.load( open("../final_project/final_project_dataset_modified.
 features_list = ["bonus", "salary"]
 # features_list = ["bonus", "long_term_incentive"]
 data = featureFormat( dictionary, features_list, remove_any_zeroes=True)
+
 target, features = targetFeatureSplit( data )
+
 
 ### training-testing split needed in regression, just like classification
 from sklearn.cross_validation import train_test_split

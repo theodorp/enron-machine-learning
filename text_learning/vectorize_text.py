@@ -40,7 +40,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
-        # temp_counter += 1
+        temp_counter += 1
         if temp_counter < 200:
             path = os.path.join('..', path[:-1])
             print path
@@ -85,4 +85,6 @@ vectorizer = TfidfVectorizer(stop_words='english')
 X = vectorizer.fit_transform(word_data)
 
 print("n_samples: %d, n_features: %d" % X.shape)
-print vectorizer.get_feature_names()[34597]
+# print vectorizer.get_feature_names()[34597]
+
+print X
